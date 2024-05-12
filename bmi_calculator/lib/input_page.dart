@@ -1,3 +1,5 @@
+import 'reusable_card.dart';
+import 'icon_content.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -26,8 +28,20 @@ class _InputPageState extends State<InputPage> {
           const Expanded(
               child: Row(
             children: [
-              ReusableCard(colour: cardDarkColor),
-              ReusableCard(colour: cardDarkColor)
+              ReusableCard(
+                colour: cardDarkColor,
+                cardChild: IconContent(
+                  fontIcon: FontAwesomeIcons.mars,
+                  subText: 'MALE',
+                ),
+              ),
+              ReusableCard(
+                colour: cardDarkColor,
+                cardChild: IconContent(
+                  fontIcon: FontAwesomeIcons.venus,
+                  subText: 'FEMALE',
+                ),
+              )
             ],
           )),
           const ReusableCard(colour: cardDarkColor),
@@ -49,28 +63,5 @@ class _InputPageState extends State<InputPage> {
         ],
       ),
     );
-  }
-}
-
-// 'final' keyword is very similar to the 'const' only 'const' can't have values that is going to be set at runtime, but the 'final' can. For example the 'final' can be set to the 'DateTime.now()'
-class ReusableCard extends StatelessWidget {
-  // properties
-  final Color colour;
-  final Widget? cardChild;
-  // '?' means this property can be null, or not required or without default value
-  // constructor
-  const ReusableCard({super.key, required this.colour, this.cardChild});
-
-  @override
-  Widget build(BuildContext context) {
-    // our reusable widgets
-    return Expanded(
-        child: Container(
-      margin: const EdgeInsets.all(15),
-      decoration: BoxDecoration(
-          color: colour,
-          borderRadius: const BorderRadius.all(Radius.circular(10))),
-      child: cardChild,
-    ));
   }
 }
