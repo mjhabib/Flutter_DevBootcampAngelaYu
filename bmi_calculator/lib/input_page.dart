@@ -56,9 +56,10 @@ class _InputPageState extends State<InputPage> {
 class ReusableCard extends StatelessWidget {
   // properties
   final Color colour;
-  // final Widget cardChild;
+  final Widget? cardChild;
+  // '?' means this property can be null, or not required or without default value
   // constructor
-  const ReusableCard({super.key, required this.colour});
+  const ReusableCard({super.key, required this.colour, this.cardChild});
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +70,7 @@ class ReusableCard extends StatelessWidget {
       decoration: BoxDecoration(
           color: colour,
           borderRadius: const BorderRadius.all(Radius.circular(10))),
-      // child: cardChild,
+      child: cardChild,
     ));
   }
 }
