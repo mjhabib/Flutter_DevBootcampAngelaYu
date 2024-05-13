@@ -5,19 +5,24 @@ class ReusableCard extends StatelessWidget {
   // properties
   final Color colour;
   final Widget? cardChild;
+  final void Function()? onPress;
   // '?' means this property can be null, or not required or without default value
   // constructor
-  const ReusableCard({super.key, required this.colour, this.cardChild});
+  const ReusableCard(
+      {super.key, required this.colour, this.cardChild, this.onPress});
 
   @override
   Widget build(BuildContext context) {
     // our reusable widgets
-    return Container(
-      margin: const EdgeInsets.all(15),
-      decoration: BoxDecoration(
-          color: colour,
-          borderRadius: const BorderRadius.all(Radius.circular(10))),
-      child: cardChild,
+    return GestureDetector(
+      onTap: onPress,
+      child: Container(
+        margin: const EdgeInsets.all(15),
+        decoration: BoxDecoration(
+            color: colour,
+            borderRadius: const BorderRadius.all(Radius.circular(10))),
+        child: cardChild,
+      ),
     );
   }
 }
