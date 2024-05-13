@@ -1,7 +1,9 @@
-import 'reusable_card.dart';
-import 'icon_content.dart';
-import 'round_icon_button.dart';
-import 'constants.dart';
+import '../components/bottom_button.dart';
+import 'results_page.dart';
+import '../components/reusable_card.dart';
+import '../components/icon_content.dart';
+import '../components/round_icon_button.dart';
+import '../constants.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -232,11 +234,12 @@ class _InputPageState extends State<InputPage> {
               ))
             ],
           )),
-          Container(
-            margin: const EdgeInsets.only(top: 10),
-            color: kBottomContainerColor,
-            width: double.infinity,
-            height: kBottomContainerHeight,
+          BottomButton(
+            navigateTo: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const ResultsPage()));
+            },
+            text: 'CALCULATOR',
           )
         ],
       ),
