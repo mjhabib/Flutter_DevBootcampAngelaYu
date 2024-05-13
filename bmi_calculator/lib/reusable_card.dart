@@ -12,13 +12,12 @@ class ReusableCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // our reusable widgets
-    return Expanded(
-        child: Container(
+    return Container(
       margin: const EdgeInsets.all(15),
       decoration: BoxDecoration(
           color: colour,
           borderRadius: const BorderRadius.all(Radius.circular(10))),
       child: cardChild,
-    ));
+    );
   }
 }
