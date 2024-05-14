@@ -1,5 +1,6 @@
-import '../components/bottom_button.dart';
 import 'results_page.dart';
+import '../calculator_brain.dart';
+import '../components/bottom_button.dart';
 import '../components/reusable_card.dart';
 import '../components/icon_content.dart';
 import '../components/round_icon_button.dart';
@@ -236,8 +237,17 @@ class _InputPageState extends State<InputPage> {
           )),
           BottomButton(
             navigateTo: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const ResultsPage()));
+              CalculatorBrain calc =
+                  CalculatorBrain(height: height, weight: weight);
+
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => ResultsPage(
+                            bmiText: calc.getText(),
+                            bmiResult: calc.getResult().toStringAsFixed(1),
+                            bmiInterpretation: calc.getInterpretation(),
+                          )));
             },
             text: 'CALCULATOR',
           )

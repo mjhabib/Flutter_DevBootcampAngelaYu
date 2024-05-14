@@ -4,7 +4,15 @@ import '../components/bottom_button.dart';
 import 'package:flutter/material.dart';
 
 class ResultsPage extends StatelessWidget {
-  const ResultsPage({super.key});
+  final String bmiText;
+  final String bmiResult;
+  final String bmiInterpretation;
+
+  const ResultsPage(
+      {super.key,
+      required this.bmiText,
+      required this.bmiResult,
+      required this.bmiInterpretation});
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +33,7 @@ class ResultsPage extends StatelessWidget {
                 style: kResultsTextTitle,
               ),
             )),
-            const Expanded(
+            Expanded(
                 flex: 5,
                 child: ReusableCard(
                   colour: kActiveCardColor,
@@ -34,15 +42,15 @@ class ResultsPage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
-                        'Normal',
+                        bmiText,
                         style: kResultsTextSubtitle,
                       ),
                       Text(
-                        '18',
+                        bmiResult,
                         style: kResultsNumber,
                       ),
                       Text(
-                        'This is your results, do whatever you like I do not care!!!',
+                        bmiInterpretation,
                         style: kResultsExplainText,
                         textAlign: TextAlign.center,
                       )
