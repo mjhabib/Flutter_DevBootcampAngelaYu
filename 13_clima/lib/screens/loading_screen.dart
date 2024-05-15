@@ -10,22 +10,22 @@ class LoadingScreen extends StatefulWidget {
 }
 
 class _LoadingScreenState extends State<LoadingScreen> {
+  @override
+  void initState() {
+    super.initState();
+    getLocation();
+  }
+
   void getLocation() async {
     Position position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.low);
+    print(position);
+    // Future<Position> position = Geolocator.getCurrentPosition(...);
+    // we could write the code like the commented line above, if other parts of our code was not depend on it, because it wouldn't wait for this line to complete!
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: TextButton(
-          onPressed: () {
-            getLocation();
-          },
-          child: const Text('Get Location'),
-        ),
-      ),
-    );
+    return const Scaffold();
   }
 }
