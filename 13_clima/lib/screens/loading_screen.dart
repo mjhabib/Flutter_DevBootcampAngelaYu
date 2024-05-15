@@ -17,11 +17,15 @@ class _LoadingScreenState extends State<LoadingScreen> {
   }
 
   void getLocation() async {
-    Position position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.low);
-    print(position);
-    // Future<Position> position = Geolocator.getCurrentPosition(...);
-    // we could write the code like the commented line above, if other parts of our code was not depend on it, because it wouldn't wait for this line to complete!
+    try {
+      // Future<Position> position = Geolocator.getCurrentPosition(...);
+      // we could write the code like the commented line above, if other parts of our code was not depend on it, because it wouldn't wait for this line to complete!
+      Position position = await Geolocator.getCurrentPosition(
+          desiredAccuracy: LocationAccuracy.low);
+      print(position);
+    } catch (e) {
+      print(e);
+    }
   }
 
   @override
