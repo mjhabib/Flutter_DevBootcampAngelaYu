@@ -1,7 +1,9 @@
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:clima/services/networking.dart';
 import 'package:flutter/material.dart';
 import '../services/location.dart';
 import '../api_keys.dart';
+import 'location_screen.dart';
 
 class LoadingScreen extends StatefulWidget {
   const LoadingScreen({super.key});
@@ -33,12 +35,23 @@ class _LoadingScreenState extends State<LoadingScreen> {
             'https://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$long&appid=$owmAPI');
 
     var weatherData = await networkHelper.getDate();
+
+    Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return const LocationScreen();
+    }));
   }
 
   @override
   Widget build(BuildContext context) {
     getLocationData();
 
-    return const Scaffold();
+    return const Scaffold(
+      body: Center(
+        child: SpinKitWaveSpinner(
+          color: Colors.white,
+          size: 100,
+        ),
+      ),
+    );
   }
 }
