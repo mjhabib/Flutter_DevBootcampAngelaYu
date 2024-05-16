@@ -1,8 +1,7 @@
 import 'package:clima/services/networking.dart';
 import 'package:flutter/material.dart';
 import '../services/location.dart';
-
-const apiKey = '57dcb0312fe1966e9a2714a55edd9464';
+import '../api_keys.dart';
 
 class LoadingScreen extends StatefulWidget {
   const LoadingScreen({super.key});
@@ -31,7 +30,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
 
     NetworkHelper networkHelper = NetworkHelper(
         url:
-            'https://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$long&appid=$apiKey');
+            'https://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$long&appid=$owmAPI');
 
     var weatherData = await networkHelper.getDate();
   }
