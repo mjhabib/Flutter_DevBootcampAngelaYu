@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'dart:io' show Platform; // show != hide
 import 'coin_data.dart';
 
 class PriceScreen extends StatefulWidget {
@@ -13,8 +14,8 @@ class _PriceScreenState extends State<PriceScreen> {
   String? selectedCurrency = 'USD';
 
   // Android material
-  List<DropdownMenuItem> getDropdownItems() {
-    List<DropdownMenuItem<String>> dropdownItem = [];
+  DropdownButton androidDropdownButton() {
+    List<DropdownMenuItem> dropdownItem = [];
     // Alternative for loop:
     // for (int i =0; i< currencyList.length; i++) {String currency = currencyList[i];}
     for (String currency in currenciesList) {
@@ -24,17 +25,31 @@ class _PriceScreenState extends State<PriceScreen> {
       );
       dropdownItem.add(newItem);
     }
-    return dropdownItem;
+    return DropdownButton(
+      value: selectedCurrency,
+      items: dropdownItem,
+      onChanged: (value) {
+        setState(
+          () {
+            selectedCurrency = value;
+          },
+        );
+      },
+    );
   }
 
   // IOS cupertino
-  List<Widget> getPickerItems() {
+  Widget iosCupertinoPicker() {
     List<Widget> pickerItems = [];
     for (String currency in currenciesList) {
       var newItem = Text(currency);
       pickerItems.add(newItem);
     }
-    return pickerItems;
+    return CupertinoPicker(
+        backgroundColor: Colors.lightBlue,
+        itemExtent: 32,
+        onSelectedItemChanged: (selectedIndex) {},
+        children: pickerItems);
   }
 
   @override
@@ -73,23 +88,12 @@ class _PriceScreenState extends State<PriceScreen> {
               alignment: Alignment.center,
               padding: const EdgeInsets.only(bottom: 30.0),
               color: Colors.lightBlue,
-              child: CupertinoPicker(
-                  backgroundColor: Colors.lightBlue,
-                  itemExtent: 32,
-                  onSelectedItemChanged: (selectedIndex) {},
-                  children: getPickerItems())),
+              child: androidDropdownButton()
+              // Since I'm testing the app on Chrome and not Android/IOS, the line of code below will give me error!
+              // Platform.isAndroid ? androidDropdownButton() : iosCupertinoPicker()
+              ),
         ],
       ),
     );
   }
 }
-
-// Android Material
-// DropdownButton(
-// value: selectedCurrency,
-// items: getDropdownItems(),
-// onChanged: (value) {
-// setState(() {
-// selectedCurrency = value;
-// });
-// }),
