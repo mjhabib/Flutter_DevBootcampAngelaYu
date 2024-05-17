@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'coin_data.dart';
 
 class PriceScreen extends StatefulWidget {
@@ -11,6 +12,7 @@ class PriceScreen extends StatefulWidget {
 class _PriceScreenState extends State<PriceScreen> {
   String? selectedCurrency = 'USD';
 
+  // Android material
   List<DropdownMenuItem> getDropdownItems() {
     List<DropdownMenuItem<String>> dropdownItem = [];
     // Alternative for loop:
@@ -23,6 +25,16 @@ class _PriceScreenState extends State<PriceScreen> {
       dropdownItem.add(newItem);
     }
     return dropdownItem;
+  }
+
+  // IOS cupertino
+  List<Widget> getPickerItems() {
+    List<Widget> pickerItems = [];
+    for (String currency in currenciesList) {
+      var newItem = Text(currency);
+      pickerItems.add(newItem);
+    }
+    return pickerItems;
   }
 
   @override
@@ -57,21 +69,27 @@ class _PriceScreenState extends State<PriceScreen> {
             ),
           ),
           Container(
-            height: 150.0,
-            alignment: Alignment.center,
-            padding: const EdgeInsets.only(bottom: 30.0),
-            color: Colors.lightBlue,
-            child: DropdownButton(
-                value: selectedCurrency,
-                items: getDropdownItems(),
-                onChanged: (value) {
-                  setState(() {
-                    selectedCurrency = value;
-                  });
-                }),
-          ),
+              height: 150.0,
+              alignment: Alignment.center,
+              padding: const EdgeInsets.only(bottom: 30.0),
+              color: Colors.lightBlue,
+              child: CupertinoPicker(
+                  backgroundColor: Colors.lightBlue,
+                  itemExtent: 32,
+                  onSelectedItemChanged: (selectedIndex) {},
+                  children: getPickerItems())),
         ],
       ),
     );
   }
 }
+
+// Android Material
+// DropdownButton(
+// value: selectedCurrency,
+// items: getDropdownItems(),
+// onChanged: (value) {
+// setState(() {
+// selectedCurrency = value;
+// });
+// }),
