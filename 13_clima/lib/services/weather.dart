@@ -5,6 +5,15 @@ import '../api_keys.dart';
 const owmURL = 'https://api.openweathermap.org/data/2.5/weather';
 
 class WeatherModel {
+  //
+  Future<dynamic> getCityWeather(String cityName) async {
+    NetworkHelper networkHelper =
+        NetworkHelper(url: '$owmURL?q=$cityName&units=metric&appid=$owmAPI');
+
+    var weatherData = await networkHelper.getDate();
+    return weatherData;
+  }
+
   Future<dynamic> getLocationWeather() async {
     Location location = Location();
     await location.getCurrentLocation();

@@ -5,10 +5,13 @@ class CityScreen extends StatefulWidget {
   const CityScreen({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _CityScreenState createState() => _CityScreenState();
 }
 
 class _CityScreenState extends State<CityScreen> {
+  late String cityName;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,7 +29,9 @@ class _CityScreenState extends State<CityScreen> {
               Align(
                 alignment: Alignment.topLeft,
                 child: TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
                   child: const Icon(
                     Icons.arrow_back_ios,
                     size: 50.0,
@@ -35,10 +40,20 @@ class _CityScreenState extends State<CityScreen> {
               ),
               Container(
                 padding: const EdgeInsets.all(20.0),
-                child: null,
+                child: TextField(
+                    autocorrect: true,
+                    autofocus: true,
+                    onChanged: (value) {
+                      cityName = value;
+                    },
+                    style: const TextStyle(color: Colors.black),
+                    decoration: kTextFieldDecoration),
               ),
               TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pop(context, cityName);
+                  // the second param in 'pop' can pass an object back to our previews screen and we can fetch/get this object using the 'Navigator.push'
+                },
                 child: const Text(
                   'Get Weather',
                   style: kButtonTextStyle,
