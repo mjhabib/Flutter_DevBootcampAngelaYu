@@ -1,4 +1,22 @@
+import 'location.dart';
+import 'networking.dart';
+import '../api_keys.dart';
+
+const owmURL = 'https://api.openweathermap.org/data/2.5/weather';
+
 class WeatherModel {
+  Future<dynamic> getLocationWeather() async {
+    Location location = Location();
+    await location.getCurrentLocation();
+
+    NetworkHelper networkHelper = NetworkHelper(
+        url:
+            '$owmURL?lat=${location.lat}&lon=${location.long}&units=metric&appid=$owmAPI');
+
+    var weatherData = await networkHelper.getDate();
+    return weatherData;
+  }
+
   String getWeatherIcon(int condition) {
     if (condition < 300) {
       return '🌩';

@@ -14,8 +14,6 @@ class Location {
       long = position.latitude;
     } catch (e) {
       print(e);
-      lat = 32.632695;
-      long = 51.365463;
     }
   }
 }
