@@ -1,6 +1,6 @@
+// import 'package:flutter/cupertino.dart';
+// import 'dart:io' show Platform; // show != hide
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
-import 'dart:io' show Platform; // show != hide
 import 'coin_data.dart';
 
 class PriceScreen extends StatefulWidget {
@@ -11,7 +11,8 @@ class PriceScreen extends StatefulWidget {
 }
 
 class _PriceScreenState extends State<PriceScreen> {
-  String? selectedCurrency = 'USD';
+  String selectedCurrency = 'USD';
+  double coinRate = 0;
 
   // Android material
   DropdownButton androidDropdownButton() {
@@ -32,6 +33,7 @@ class _PriceScreenState extends State<PriceScreen> {
         setState(
           () {
             selectedCurrency = value;
+            getRate(selectedCurrency);
           },
         );
       },
@@ -39,17 +41,35 @@ class _PriceScreenState extends State<PriceScreen> {
   }
 
   // IOS cupertino
-  Widget iosCupertinoPicker() {
-    List<Widget> pickerItems = [];
-    for (String currency in currenciesList) {
-      var newItem = Text(currency);
-      pickerItems.add(newItem);
+  // Widget iosCupertinoPicker() {
+  //   List<Widget> pickerItems = [];
+  //   for (String currency in currenciesList) {
+  //     var newItem = Text(currency);
+  //     pickerItems.add(newItem);
+  //   }
+  //   return CupertinoPicker(
+  //       backgroundColor: Colors.lightBlue,
+  //       itemExtent: 32,
+  //       onSelectedItemChanged: (selectedIndex) {},
+  //       children: pickerItems);
+  // }
+
+  void getRate(String currency) async {
+    var result = await CoinData().getCoinDate(currency);
+    if (result != null) {
+      setState(() {
+        coinRate = result;
+      });
+    } else {
+      coinRate = 0;
     }
-    return CupertinoPicker(
-        backgroundColor: Colors.lightBlue,
-        itemExtent: 32,
-        onSelectedItemChanged: (selectedIndex) {},
-        children: pickerItems);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    // One-Time only
+    getRate('USD');
   }
 
   @override
@@ -70,12 +90,13 @@ class _PriceScreenState extends State<PriceScreen> {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10.0),
               ),
-              child: const Padding(
-                padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 28.0),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                    vertical: 15.0, horizontal: 28.0),
                 child: Text(
-                  '1 BTC = ? USD',
+                  '1 BTC = ${coinRate.toInt()} $selectedCurrency',
                   textAlign: TextAlign.center,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 20.0,
                     color: Colors.white,
                   ),
