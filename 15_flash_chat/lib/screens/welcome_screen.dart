@@ -1,7 +1,11 @@
+import '/screens/login_screen.dart';
+import '/screens/registration_screen.dart';
 import 'package:flutter/material.dart';
 
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({super.key});
+  static const String id = 'welcome';
+  // to save resources we can use the modifier/keyword 'static' to create class-wide states or constants, and to use it, we no longer need to create an object. (i.e: WelcomeScreen.id)
 
   @override
   State<WelcomeScreen> createState() => _WelcomeScreenState();
@@ -44,7 +48,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 borderRadius: BorderRadius.circular(30.0),
                 child: MaterialButton(
                   onPressed: () {
-                    //Go to login screen.
+                    Navigator.pushNamed(context, LoginScreen.id);
                   },
                   minWidth: 200.0,
                   height: 42.0,
@@ -62,7 +66,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 elevation: 5.0,
                 child: MaterialButton(
                   onPressed: () {
-                    //Go to registration screen.
+                    Navigator.pushNamed(context, RegistrationScreen.id);
                   },
                   minWidth: 200.0,
                   height: 42.0,
