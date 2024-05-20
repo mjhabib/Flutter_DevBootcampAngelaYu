@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "1085489034979",
-    "project_id": "flash-chat-c791c",
-    "storage_bucket": "flash-chat-c791c.appspot.com"
+    "project_number": "461404454482",
+    "project_id": "flash-chat-a24bf",
+    "storage_bucket": "flash-chat-a24bf.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1085489034979:android:3be3cfc76687569d1b37d6",
+        "mobilesdk_app_id": "1:461404454482:android:d3fb9aeca6f5fce42c698b",
         "android_client_info": {
           "package_name": "com.mjhabib.flash_chat"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyDmbGAE2MRfMnz6LuQ7IZIkM3UZtmF7kmE"
+          "current_key": "AIzaSyDLfMxHBd27lQ4iVikm_4vLnRuRlNQC_dc"
         }
       ],
       "services": {
