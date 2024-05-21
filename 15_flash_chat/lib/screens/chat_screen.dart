@@ -8,10 +8,10 @@ class ChatScreen extends StatefulWidget {
   static const String id = 'chat';
 
   @override
-  State<ChatScreen> createState() => _ChatScreenState();
+  State<ChatScreen> createState() => exactly();
 }
 
-class _ChatScreenState extends State<ChatScreen> {
+class exactly extends State<ChatScreen> {
   final _auth = FirebaseAuth.instance;
   final _fireStore = FirebaseFirestore.instance;
   User? loggedInUser;
@@ -25,6 +25,25 @@ class _ChatScreenState extends State<ChatScreen> {
       }
     } catch (e) {
       print(e);
+    }
+  }
+
+  // with this method we can pull data from FireStore actively (one time) which is not very useful for this type of apps
+
+  // void getMessages() async {
+  //   final messages = await _fireStore.collection('messages').get();
+  //   for (var message in messages.docs) {
+  //     print(message.data());
+  //   }
+  // }
+
+  // with this method the FireStore will push data/stream to our app because we tell it to listen to any changes which is exactly what we want
+
+  void getMessagesStream() async {
+    await for (var snapshot in _fireStore.collection('messages').snapshots()) {
+      for (var message in snapshot.docs) {
+        print(message.data());
+      }
     }
   }
 
@@ -43,8 +62,9 @@ class _ChatScreenState extends State<ChatScreen> {
           IconButton(
               icon: const Icon(Icons.close),
               onPressed: () {
-                _auth.signOut();
-                Navigator.pop(context);
+                // _auth.signOut();
+                // Navigator.pop(context);
+                getMessagesStream();
               }),
         ],
         title: const Text('⚡️Chat'),
