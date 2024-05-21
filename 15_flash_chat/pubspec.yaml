@@ -13,6 +13,7 @@ dependencies:
   firebase_auth: ^4.19.5
   flutter:
     sdk: flutter
+  modal_progress_hud_nsn: ^0.5.1
 
 dev_dependencies:
   flutter_test:
