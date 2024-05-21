@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../constants.dart';
 
 final _fireStore = FirebaseFirestore.instance;
+User? loggedInUser;
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({super.key});
@@ -16,7 +17,6 @@ class ChatScreen extends StatefulWidget {
 class exactly extends State<ChatScreen> {
   final _auth = FirebaseAuth.instance;
   final messageTextController = TextEditingController();
-  User? loggedInUser;
   late String messageText;
 
   Future<void> getCurrentUser() async {
@@ -132,19 +132,25 @@ class MessagesStream extends StatelessWidget {
             ),
           );
         }
-        final messages = snapshot.data?.docs;
+        final messages = snapshot.data?.docs.reversed;
         List<MessageBubble> messageBubbles = [];
 
         for (var message in messages!) {
           final textMessage = message.get('text');
           final textSender = message.get('sender');
-          final messageBubble =
-              MessageBubble(text: textMessage, sender: textSender);
+          final currentUser = loggedInUser;
+
+          final messageBubble = MessageBubble(
+            text: textMessage,
+            sender: textSender,
+            isMe: currentUser == textSender,
+          );
 
           messageBubbles.add(messageBubble);
         }
         return Expanded(
           child: ListView(
+            reverse: true,
             padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
             children: messageBubbles,
           ),
@@ -157,30 +163,46 @@ class MessagesStream extends StatelessWidget {
 class MessageBubble extends StatelessWidget {
   final text;
   final sender;
+  final bool isMe;
 
-  const MessageBubble({super.key, required this.text, required this.sender});
+  const MessageBubble(
+      {super.key,
+      required this.text,
+      required this.sender,
+      required this.isMe});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment:
+            isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
         children: [
           Text(
             sender.toString(),
             style: const TextStyle(fontSize: 12, color: Colors.black54),
           ),
           Material(
-              borderRadius: BorderRadius.circular(30),
+              borderRadius: isMe
+                  ? const BorderRadius.only(
+                      topLeft: Radius.circular(30.0),
+                      bottomLeft: Radius.circular(30.0),
+                      bottomRight: Radius.circular(30.0))
+                  : const BorderRadius.only(
+                      bottomLeft: Radius.circular(30.0),
+                      bottomRight: Radius.circular(30.0),
+                      topRight: Radius.circular(30.0),
+                    ),
               elevation: 5,
-              color: Colors.lightBlueAccent,
+              color: isMe ? Colors.lightBlueAccent : Colors.white,
               child: Padding(
                 padding:
                     const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                 child: Text(
                   text.toString(),
-                  style: const TextStyle(fontSize: 15, color: Colors.white),
+                  style: TextStyle(
+                      fontSize: 15, color: isMe ? Colors.white : Colors.black),
                 ),
               )),
         ],
