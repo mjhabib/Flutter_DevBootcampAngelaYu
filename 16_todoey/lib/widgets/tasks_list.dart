@@ -1,24 +1,17 @@
 import 'package:flutter/material.dart';
-import '../widgets/task_tile.dart';
 import '../models/task.dart';
+import '../widgets/task_tile.dart';
 
 class TasksList extends StatefulWidget {
-  const TasksList({
-    super.key,
-  });
+  final List<Task> tasks;
+
+  const TasksList({super.key, required this.tasks});
 
   @override
   State<TasksList> createState() => _TasksListState();
 }
 
 class _TasksListState extends State<TasksList> {
-  List<Task> tasks = [
-    Task(name: 'buy milk'),
-    Task(name: 'pickup the books'),
-    Task(name: 'have fun!'),
-    Task(name: 'new task')
-  ];
-
   void checkboxCallback;
 
   @override
@@ -26,16 +19,16 @@ class _TasksListState extends State<TasksList> {
     return ListView.builder(
       itemBuilder: (context, index) {
         return TaskTile(
-          taskTitle: tasks[index].name,
-          isChecked: tasks[index].isDone,
+          taskTitle: widget.tasks[index].name,
+          isChecked: widget.tasks[index].isDone,
           toggleCheckboxState: (value) {
             setState(() {
-              tasks[index].toggleDone();
+              widget.tasks[index].toggleDone();
             });
           },
         );
       },
-      itemCount: tasks
+      itemCount: widget.tasks
           .length, // the ListView.builder needs to know how many items to create
     );
   }
